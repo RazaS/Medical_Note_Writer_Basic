@@ -21,8 +21,9 @@ ui <- fluidPage(tags$style(type='text/css', '#txtout {white-space: pre-wrap;}'),
                   tabPanel("Note Writer",
                            sidebarPanel(
                              tags$h3("Input:"),
-                             textInput("txt1", "Given Name:", ""),
-                             textInput("txt2", "Surname:", ""),
+                             textInput("txt1", "My Name:", ""),
+                             textInput("txt2", "Staff:", ""),
+                             
                              actionButton("disclaimer", "Virtual Disclaimer"),
                              
                              
@@ -35,20 +36,28 @@ ui <- fluidPage(tags$style(type='text/css', '#txtout {white-space: pre-wrap;}'),
                              actionButton("rfr", "Reason for Referral"),
                              actionButton("pmh", "Past Medical History"),
                              actionButton("rx", "Medication"),
+                             actionButton("all", "Allergies"),
                              actionButton("sohx", "Social History"),
                              
                              actionButton("hpi", "History of Presenting Illness"),
                              actionButton("phyex", "Physical Exam"),
                              actionButton("ix", "Investigations:"),
-                             actionButton("ip", "Impression"),
                              
                              headerPanel(""),
                              
+                             actionButton("ip", "Impression"),
+                             actionButton("endinggreet", "Ending greeting"),
+                             actionButton("date", "Date"),
                              actionButton("sig", "Signature"),
                              
+                             
+                             
                              headerPanel(""),
                              
-                             actionButton("date", "Date"),
+                             actionButton("sub", "Subjective"),
+                             actionButton("obj", "Objective"),
+                             actionButton("asp", "A/P"),
+                             
                              
                              headerPanel(""),
                              
@@ -171,7 +180,7 @@ server <- function(input, output) {
   
   observeEvent(input$disclaimer, {
     
-    ot$a <-  paste(ot$a, "This was a virtual visit and the patient was expalined the privacy risks of online communicaiton. They understood and agreed to proceed with this interview", "", sep="\n")
+    ot$a <-  paste(ot$a, "This was a virtual visit and privacy risks of virtual communication were explained to the patient. The potential need to come into clinic or emergency department for more urgent issues was also discussed. They understood and agreed to proceed with this interview.", "", sep="\n")
 
   })
   
@@ -197,6 +206,11 @@ server <- function(input, output) {
                
                })  
   
+  observeEvent(input$all, {
+    ot$a <-  paste(ot$a, "ALLERGIES:", "", sep="\n")
+    
+  })  
+  
   observeEvent(input$sohx, {
     ot$a <-  paste(ot$a, "SOCIAL HISTORY:", "", sep="\n")
   })  
@@ -214,7 +228,7 @@ server <- function(input, output) {
                })  
   
   observeEvent(input$iviron, {
-    ot$a <-  paste(ot$a, "The patient was counseled about the risks of IV iron therapy, including the risk of mild and anaphylactic infusion reactions.:", "", sep="\n")
+    ot$a <-  paste(ot$a, "The patient was counseled about the risks of IV iron therapy, including the risk of mild and anaphylactic infusion reactions, mild aches and pains the day after infusion, a delay between the infusion and effects to manifest on the complete blood count. The patient had no further questions and agreed to proceed.", "", sep="\n")
   })  
   
   observeEvent(input$ip, {
@@ -223,8 +237,7 @@ server <- function(input, output) {
   
   observeEvent(input$sig, {
     
-    name = paste("Dr.", input$txt1, " ", input$txt2)
-    ot$a <-  paste(ot$a, name,  " in service of Dr. ___________, Staff Hematologist", "", sep="\n")
+    ot$a <-  paste(ot$a, "Dr. ", input$txt1,  " in service of Dr.", input$txt2, ", Staff Hematologist", "")
   })  
   
   observeEvent(input$action, {
@@ -237,6 +250,12 @@ server <- function(input, output) {
 
   })
   
+  
+  observeEvent(input$endinggreet, {
+    ot$a <-  paste(ot$a, "It was a pleasure seeing this patient in clinic today. Thank you for involving us in their care.", "", "Sincerely yours,", sep="\n")
+    
+  })  
+  
   output$txtout <- renderText({
     paste(ot$a)
     
@@ -244,9 +263,21 @@ server <- function(input, output) {
   })
   
   
-
+  observeEvent(input$sub, {
+    ot$a <-  paste(ot$a, "SUBJECTIVE", "", sep="\n")
+    
+  }) 
   
   
+  observeEvent(input$obj, {
+    ot$a <-  paste(ot$a, "OBJECTIVE", "", sep="\n")
+    
+  }) 
+  
+  observeEvent(input$asp, {
+    ot$a <-  paste(ot$a, "ASSESSMENT AND PLAN:", "", sep="\n")
+    
+  }) 
   
   
   
