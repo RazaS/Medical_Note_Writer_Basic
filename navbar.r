@@ -1,8 +1,4 @@
-# http://github.com/dataprofessor  #
 ####################################
-
-# Modified from Winston Chang, https://shiny.rstudio.com/gallery/shiny-theme-selector.html
-# Modified from Winston Chang, 
 # https://shiny.rstudio.com/gallery/shiny-theme-selector.html
 
 # Concepts about Reactive programming used by Shiny, 
